@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Signin</title>
+    <title>login</title>
 </head>
 
 <body>
-    <form class="" action="hello/:name" method="get">
+    {% extends './base.html' %}
+    {% block header %}
+    <h1>Sgn In ...</h1>
+    {% endblock %}
+
+    {% block body %}
+    <form class="" action="signin" method="post">
         <p>账号： <input name="name" type="text"></p>
         <p>密码： <input name="password" type="password"></p>
         <p><button type="submit">登入</button></p>
     </form>
+    {% endblock %}
+
 
 </body>
 

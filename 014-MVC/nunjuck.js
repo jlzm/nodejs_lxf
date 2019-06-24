@@ -23,15 +23,29 @@ const createEnv = (path, opts) => {
         return env;
 }
 
-const env = createEnv('views', {
-    watch: true,
-    filters: {
-        hex: n => {
-            return 'OK' + n.toString(16);
+// const env = createEnv('views', {
+//     watch: true,
+//     filters: {
+//         hex: n => {
+//             return 'OK' + n.toString(16);
+//         }
+//     }
+// })
+
+const template = (path, opts) => {
+    let env = createEnv(path, opts);
+    return async (ctx, next) => {
+        // 绑定render函数
+        ctx.render = (view, model) => {
+            ctx.response.body = env.render(view, Object.assign({}, ctx.state || {}, model || {}));
+            ctx.response.type = 'text/html';
         }
+        // 继续处理请求
+        await next();
     }
-})
+}
 
 module.exports = {
-    env
-}
+    // env,
+    template
+};
