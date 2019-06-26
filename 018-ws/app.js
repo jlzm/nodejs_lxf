@@ -1,10 +1,10 @@
-const WebScoket = require('ws');
+const WebSocket = require('ws');
 
 
 // 服务端
-const WebScoketServer = WebScoket.Server;
+const WebSocketServer = WebSocket.Server;
 
-const wss = new WebScoketServer({
+const wss = new WebSocketServer({
     port: 3000
 });
 
@@ -36,7 +36,7 @@ wss.on('connection', (ws) => {
 
 
 // 客户端
-const ws = new WebScoket('ws://localhost:3000/test');
+const ws = new WebSocket('ws://localhost:3000/test');
 
 ws.on('open', () => {
     console.log('[CLIENT] open()');
