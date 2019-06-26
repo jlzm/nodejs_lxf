@@ -1,4 +1,3 @@
-const env = require('../nunjuck');
 
 const fn_hello = async(ctx, netx) =>{
     ctx.render('hello.html');
