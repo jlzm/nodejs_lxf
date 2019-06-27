@@ -3,7 +3,6 @@ const parserUser = (obj) => {
     if(!obj) {
         return;
     }
-    console.log('obj', boj);
     let cookieValue = '';
     if(typeof obj === 'string') {
         cookieValue = obj;

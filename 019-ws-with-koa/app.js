@@ -44,23 +44,14 @@ const wss = new WebSocketServer({
 });
 
 // webServer
-wss.on('connection', (ws) => {
-    let user = parserUser(ws.upgradReq);
+wss.on('connection', (ws, req) => {
+    let user = parserUser(req);
     if(!user) {
         ws.close(4001, 'Invalid user');
         return;
     }
     ws.user = user;
-    ws.wss = ws;
-    console.log(`[SERVER] connection()`);
-    ws.on('message', message => {
-        console.log(`[SERVER] ${message}`);
-        setTimeout(() => {
-            ws.send(`ECHO: ${message}`, err => {
-                if(err) console.log('err', err);
-            })
-        }, 1000);
-    })
+    ws.wss = wss;
 })
 
 wss.broadcast = (data) => {
@@ -69,20 +60,21 @@ wss.broadcast = (data) => {
     })
 }
 
+
+
 // Client
 
 const ws = new WebSocket('ws:localhost:3000/ws/chat');
 
-ws.on('open', () => {
-    console.log('this', this);
+ws.on('open', function() {
     console.log('[CLIENT] : open()');
     ws.send('Hello!');
 })
 
-ws.on('message', message => {
-    console.log('this', this);
+ws.on('message', function(message) {
     console.log(`[CLIENT] Received: ${message}`);
-    // if(message && message.trim()) {
-    //     let msg = createMessage('chat', )
-    // }
+    if(message && message.trim()) {
+        let msg = createMessage('chat', ws.user, message.trim());
+        ws.wss.broadcast(msg);
+    }
 })
