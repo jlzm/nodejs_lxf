@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>post</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+<script>
+    let propsData = {
+        name: 'xyy',
+        price: 11111
+    }
+    propsData = JSON.stringify(propsData);
+    let http = new XMLHttpRequest();
+    http.open('POST', 'http://localhost:3000/api/products');
+    http.setRequestHeader("Content-type","application/json");
+    http.send(propsData);
+    http.addEventListener('load', function() {
+        let data = JSON.parse(this.responseText);
+        console.log('data', data);
+    })
+</script>
